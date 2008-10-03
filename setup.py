@@ -28,7 +28,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 setup(name='repoze.sphinx.autointerface',
       version=__version__,
       description='Sphinx extension: auto-generates API docs '
-                  'from Zope intervces',
+                  'from Zope interfaces',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
         "Development Status :: 3 - Alpha",
