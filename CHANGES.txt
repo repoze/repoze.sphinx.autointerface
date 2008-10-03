@@ -1,6 +1,11 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
+0.1.2 (2008-10-03)
+------------------
+
+- Packaging change:  improved description in README.txt.
+
 0.1.1 (2008-10-03)
 ------------------
 
