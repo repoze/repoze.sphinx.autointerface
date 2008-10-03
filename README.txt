@@ -10,7 +10,7 @@ Thie package defines an extension for the
 Installation
 ------------
 
-Install via :command:`easy_install` or any other mechanism to get the
+Install via ``easy_install`` or any other mechanism to get the
 package on the path.
 
 Registering the Extension

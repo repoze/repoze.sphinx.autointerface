@@ -1,6 +1,12 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
+0.1.1 (2008-10-03)
+------------------
+
+- Packaging bug:  the 'long_description' was not rendering properly to
+  HTML on PyPI.
+
 0.1 (2008-10-02)
 ----------------
 
