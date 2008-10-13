@@ -40,7 +40,7 @@ Using the Extension
 At appropriate points in your document, call out the interface
 autodocs via::
 
-  .. autoinclude:: yourpackage.interfaces.IFoo
+  .. autointerface:: yourpackage.interfaces.IFoo
 
 Output from the directive includes
 
