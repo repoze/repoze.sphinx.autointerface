@@ -81,7 +81,7 @@ class AutoInterfaceDirective(Directive):
 
 def _resolve_dotted_name(dotted):
     #return EntryPoint.parse('x=%s' % dotted).load(False)
-    tokens = dotted.split('.')
+    tokens = [str(x) for x in dotted.split('.')]
     path, name = tokens[:-1], tokens[-1]
     thing = __import__('.'.join(path), {}, {}, [name])
     return getattr(thing, name)

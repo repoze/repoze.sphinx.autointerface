@@ -1,8 +1,12 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-0.1.3 (2009-01-14)
+0.1.3 (unreleased)
 ------------------
+
+- Coerce unicode path elements to str in ``_resolve_dotted_name``.
+  Note that non-ASCII path elements won't work:  this fix just deals
+  with the case where the path was of type unicode.
 
 - Fixed spelling of directive in README.txt.
 
