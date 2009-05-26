@@ -109,8 +109,7 @@ def _indent_and_wrap(text, level, width=72):
 
 
 def setup(app):
-    app.add_directive('autointerface', AutoInterfaceDirective,
-                      0, (1, 0, 1) )
+    app.add_directive('autointerface', AutoInterfaceDirective)
 
 
 if __name__ == '__main__':
