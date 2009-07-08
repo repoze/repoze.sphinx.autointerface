@@ -12,7 +12,7 @@
 #
 ##############################################################################
 
-__version__ = '0.1.3'
+__version__ = '0.2'
 
 import os
 
@@ -46,6 +46,7 @@ setup(name='repoze.sphinx.autointerface',
       zip_safe=False,
       tests_require = [],
       install_requires=['zope.interface',
+                        'Sphinx>=0.6.1',
                        ],
       #test_suite="repoze.",
       )
