@@ -1,7 +1,13 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-0.2 (Unreleased)
+0.3 (Unreleased)
+----------------
+
+- ...
+
+
+0.2 (2009-08-20)
 ----------------
 
 - Refactor sphinx integration. There are now separate ``autointerface``
