@@ -1,5 +1,7 @@
 repoze.sphinx.autointerface TODOs
 =================================
 
+- [_] Add an :interface: mode and corresponding directive.
+
 - [_] Get our output to look more like that produced by '.. autoclass::'.
       Probably blocks in the ':interface:' mode.
