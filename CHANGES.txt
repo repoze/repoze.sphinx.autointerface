@@ -1,17 +1,16 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-0.3 (Unreleased)
-----------------
-
-- ...
-
-
-0.2 (2009-08-20)
+0.3 (2009-10-25)
 ----------------
 
 - Refactor sphinx integration. There are now separate ``autointerface``
   and ``interface`` directives.
+
+0.2.1 (2009-08-20)
+----------------
+
+- Fix add_directive arguments to work with Sphinx 0.6.1, now required.
 
 0.1.3 (2009-01-14)
 ------------------

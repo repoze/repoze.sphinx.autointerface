@@ -1,185 +1,75 @@
-import sys
-from docutils.nodes import paragraph
-from docutils.parsers.rst import Directive
-from docutils.statemachine import ViewList
+import types
+from sphinx.util.docstrings import prepare_docstring
+from sphinx.util import force_decode
+from sphinx.directives.desc import ClasslikeDesc
+from sphinx.ext import autodoc
 from zope.interface import Interface
 
-class AutoInterfaceDirective(Directive):
-    required_arguments = 1
-    optional_arguments = 0
-    final_argument_whiltepace = False
-    option_spec = {}
-    has_content = False
-    def __init__(self,
-                 directive,
-                 arguments,
-                 options,           # ignored
-                 content,           # ignored
-                 lineno,
-                 content_offset,    # ignored
-                 block_text,        # ignored
-                 state,
-                 state_machine,     # ignored
-                ):
-        assert directive == 'autointerface'
-        self.name = arguments[0]
-        self.state = state
-        self.lineno = lineno
+class InterfaceDesc(ClasslikeDesc):
+    def get_index_text(self, modname, name_cls):
+        return '%s (interface in %s)' % (name_cls[0], modname)
 
-    def _buildLines(self):
-        try:
-            iface = _resolve_dotted_name(self.name)
-        except (ImportError, AttributeError):
-            return [self.state.document.reporter.warning(
-                'autointerface can\'t import/find %r: \n'
-                'please check your spelling and sys.path' %
-                str(self.name), line=self.lineno)]
-        bases = [x for x in iface.__bases__ if x is not Interface]
 
-        module_file = sys.modules.get(iface.__module__)
-        if module_file is not None:
-            self.state.document.settings.env.note_dependency(
-                    module_file.__file__)
+class InterfaceDocumenter(autodoc.ClassDocumenter):
+    """
+    Specialized Documenter directive for zope interfaces.
+    """
+    objtype = "interface"
+    # Must be a higher priority than ClassDocumenter
+    member_order = 10
 
-        result = ViewList()
-        result.append(u'', '')
+    def __init__(self, *args, **kwargs):
+        super(InterfaceDocumenter, self).__init__(*args, **kwargs)
+        self.options.members=autodoc.ALL
+        self.options.show_inheritance=True
 
-        result.append(u'Interface: ``%s``' % self.name, '<autointerface>')
- 
-        if bases:
-            result.append(u'', '')
-            for b in bases:
-                result.append(u'- Extends: %s' % b.getName(), '<autointerface>')
-            result.append(u'', '')
+    @classmethod
+    def can_document_member(cls, member, membername, isattr, parent):
+        return isinstance(member, types.ClassType) and \
+                issubclass(member, Interface)
 
-        docstring = iface.getDoc()
-        if docstring:
-            for line in _indent_and_wrap(docstring, 1):
-                result.append(line, '<autointerface>')
+    def add_directive_header(self, sig):
+        if self.doc_as_attr:
+            self.directivetype = 'attribute'
+        autodoc.Documenter.add_directive_header(self, sig)
 
-        for name, desc in iface.namesAndDescriptions():
-            result.append(u'', '<autointerface>')
+        # add inheritance info, if wanted
+        bases=[base for base in self.object.__bases__ if base is not Interface]
+        if not self.doc_as_attr and self.options.show_inheritance and bases:
+            self.add_line(u'', '<autodoc>')
+            bases = [u':class:`%s.%s`' % (b.__module__, b.getName())
+                     for b in bases]
+            self.add_line(u'   Extends: %s' % ', '.join(bases),
+                          '<autodoc>')
+
+    def format_args(self):
+        return ""
+
+
+    def document_members(self, all_members=True):
+        oldindent = self.indent
+        for name, desc in self.object.namesAndDescriptions():
+            self.add_line(u'', '<autointerface>')
             sig = getattr(desc, 'getSignatureString', None)
             if sig is None:
-                result.append(u'  Attribute: ``%s``' % name, '<autointerface>')
+                self.add_line(u'.. attribute:: %s' % name, '<autointerface>')
             else:
-                result.append(u'  Method: ``%s%s``' % (name, sig()),
+                self.add_line(u'.. method:: %s%s' % (name, sig()),
                               '<autointerface>')
             doc = desc.getDoc()
             if doc:
-                for line in _indent_and_wrap(doc, 2):
-                    result.append(line, '<autointerface>')
+                self.add_line(u'', '<autointerface>')
+                self.indent += self.content_indent
+                sourcename = u'docstring of %s.%s' % (self.fullname, name)
+                docstrings=[prepare_docstring(force_decode(doc, None))]
+                for i, line in enumerate(self.process_doc(docstrings)):
+                    self.add_line(line, sourcename, i)
+                self.add_line(u'', '<autointerface>')
+                self.indent = oldindent
 
-        return result
-
-    def run(self):
-        result = self._buildLines()
-
-        node = paragraph()
-        self.state.nested_parse(result, 0, node)
-        return node.children
-
-def _resolve_dotted_name(dotted):
-    #return EntryPoint.parse('x=%s' % dotted).load(False)
-    tokens = [str(x) for x in dotted.split('.')]
-    path, name = tokens[:-1], tokens[-1]
-    thing = __import__('.'.join(path), {}, {}, [name])
-    return getattr(thing, name)
-
-def _indent_and_wrap(text, level, width=72):
-    indent = u' ' * level
-    lines = []
-    current = indent
-
-    for line in text.splitlines():
-        if not line.strip():
-            lines.append(current)
-            lines.append(indent)
-            current = indent
-            continue
-
-        for token in line.split():
-            current = u' '.join([current, token])
-            if len(current) > width:
-                lines.append(current)
-                current = indent
-    else:
-        lines.append(current)
-    return lines
 
 
 def setup(app):
-    app.add_directive('autointerface', AutoInterfaceDirective)
+    app.add_directive('interface', InterfaceDesc)
+    app.add_autodocumenter(InterfaceDocumenter)
 
-
-if __name__ == '__main__':
-    from zope.interface import Attribute
-    from zope.interface import Interface
-
-    class IFoo(Interface):
-        """ Foo API.
-        """
-        bar = Attribute(u'Explain bar')
-
-        def bam(baz, qux):
-            """ -> frobnatz.
-            """
-
-    class IBar(IFoo):
-        """ Extending IFoo for fun and profit.
-        """
-        spam = Attribute(u'Great with eggs.')
-
-    class DummyReporter:
-        def warning(self, msg, line):
-            return '%s [%s]' % (msg, line)
-
-    class DummyDocument:
-        reporter = DummyReporter()
-
-    class DummyState:
-        document = DummyDocument()
-
-    directive = AutoInterfaceDirective(
-        'autointerface', 
-        ['__main__.ISpaz'],
-        {},
-        content=None,
-        lineno=42,
-        content_offset=127,
-        block_text='XYZZY',
-        state=DummyState(),
-        state_machine=None,
-       )
-    for x in directive._buildLines():
-        print x
-
-    directive = AutoInterfaceDirective(
-        'autointerface', 
-        ['__main__.IFoo'],
-        {},
-        content=None,
-        lineno=42,
-        content_offset=127,
-        block_text='XYZZY',
-        state=DummyState(),
-        state_machine=None,
-       )
-
-    for x in directive._buildLines():
-        print x
-
-    directive = AutoInterfaceDirective(
-        'autointerface', 
-        ['__main__.IBar'],
-        {},
-        content=None,
-        lineno=42,
-        content_offset=127,
-        block_text='XYZZY',
-        state=DummyState(),
-        state_machine=None,
-       )
-
-    for x in directive._buildLines():
-        print x
