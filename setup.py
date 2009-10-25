@@ -47,6 +47,7 @@ setup(name='repoze.sphinx.autointerface',
       tests_require = [],
       install_requires=['zope.interface',
                         'Sphinx>=0.6.1',
+                        'setuptools',
                        ],
       #test_suite="repoze.",
       )
