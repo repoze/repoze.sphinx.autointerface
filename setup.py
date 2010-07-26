@@ -12,7 +12,7 @@
 #
 ##############################################################################
 
-__version__ = '0.4dev'
+__version__ = '0.4'
 
 import os
 
@@ -31,7 +31,7 @@ setup(name='repoze.sphinx.autointerface',
                   'from Zope interfaces',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "Programming Language :: Python",
         ],
