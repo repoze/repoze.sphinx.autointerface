@@ -1,11 +1,15 @@
 import types
 from sphinx.util.docstrings import prepare_docstring
 from sphinx.util import force_decode
-from sphinx.directives.desc import ClasslikeDesc
+try:
+    # Sphinx < 1.0
+    from sphinx.directives.desc import ClasslikeDesc as PyClasslike
+except ImportError:
+    from sphinx.domains.python import PyClasslike
 from sphinx.ext import autodoc
 from zope.interface import Interface
 
-class InterfaceDesc(ClasslikeDesc):
+class InterfaceDesc(PyClasslike):
     def get_index_text(self, modname, name_cls):
         return '%s (interface in %s)' % (name_cls[0], modname)
 
@@ -70,6 +74,10 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
 
 
 def setup(app):
-    app.add_directive('interface', InterfaceDesc)
+    try:
+        app.add_directive_to_domain('py', 'interface', InterfaceDesc)
+    except AttributeError:
+        # Sphinx < 1.0
+        app.add_directive('interface', InterfaceDesc)
     app.add_autodocumenter(InterfaceDocumenter)
 

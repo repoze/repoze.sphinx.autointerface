@@ -1,10 +1,10 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-0.x (unreleased)
+0.4 (unreleased)
 ----------------
 
-- ...
+- Fixed compatibility with Sphinx 1.0
 
 
 0.3 (2009-10-25)
