@@ -6,6 +6,8 @@ repoze.sphinx.autointerface Changelog
 
 - Fixed compatibility with Sphinx 1.0
 
+- Un-break PyPI ReST/HTML-rendering again.
+
 
 0.3 (2009-10-25)
 ----------------
@@ -14,7 +16,7 @@ repoze.sphinx.autointerface Changelog
   and ``interface`` directives.
 
 0.2.1 (2009-08-20)
-----------------
+------------------
 
 - Fix add_directive arguments to work with Sphinx 0.6.1, now required.
 
