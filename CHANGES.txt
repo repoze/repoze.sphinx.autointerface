@@ -1,7 +1,7 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-0.5 (unreleased)
+0.5 (2011-01-18)
 ----------------
 
 - Added support for the ':member-order:' flag, which can take one of the
