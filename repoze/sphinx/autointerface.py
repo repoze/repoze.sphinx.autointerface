@@ -49,10 +49,27 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
     def format_args(self):
         return ""
 
-
     def document_members(self, all_members=True):
         oldindent = self.indent
-        for name, desc in self.object.namesAndDescriptions():
+        members = self.object.namesAndDescriptions()
+        member_order = (self.options.member_order or 
+                        self.env.config.autodoc_member_order)
+        if member_order == 'alphabetical':
+            members.sort()
+        if member_order == 'groupwise':
+            # sort by group; relies on stable sort to keep items in the
+            # same group sorted alphabetically
+            members.sort(key=lambda e:
+                                getattr(e[1], 'getSignatureString',
+                                        None) is not None)
+        elif member_order == 'bysource' and self.analyzer:
+            # sort by source order, by virtue of the module analyzer
+            tagorder = self.analyzer.tagorder
+            def keyfunc(entry):
+                return tagorder.get(entry[0], len(tagorder))
+            members.sort(key=keyfunc)
+
+        for name, desc in members:
             self.add_line(u'', '<autointerface>')
             sig = getattr(desc, 'getSignatureString', None)
             if sig is None:

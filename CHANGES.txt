@@ -4,6 +4,10 @@ repoze.sphinx.autointerface Changelog
 0.5 (unreleased)
 ----------------
 
+- Added support for the ':member-order:' flag, which can take one of the
+  three stock values, "alphabetical", "groupwise", or "bysource".  By
+  default, members are documented in "hash" order.
+
 
 0.4 (2010-07-26)
 ----------------
