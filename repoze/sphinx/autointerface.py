@@ -24,7 +24,6 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
 
     def __init__(self, *args, **kwargs):
         super(InterfaceDocumenter, self).__init__(*args, **kwargs)
-        self.options.members=autodoc.ALL
         self.options.show_inheritance=True
 
     @classmethod
@@ -52,6 +51,12 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
     def document_members(self, all_members=True):
         oldindent = self.indent
         members = self.object.namesAndDescriptions()
+        if self.options.members is not autodoc.ALL:
+            specified = []
+            for line in self.options.members:
+                specified.extend(line.split())
+            mapping = dict(members)
+            members = [(x, mapping[x]) for x in specified]
         member_order = (self.options.member_order or 
                         self.env.config.autodoc_member_order)
         if member_order == 'alphabetical':

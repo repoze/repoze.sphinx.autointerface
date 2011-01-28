@@ -4,7 +4,7 @@ repoze.sphinx.autointerface Changelog
 0.6 (unreleased)
 ----------------
 
-- TBD
+- Correctly handle ':members:' values explicitly set in the directive.
 
 
 0.5 (2011-01-18)
