@@ -68,7 +68,6 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
                                 getattr(e[1], 'getSignatureString',
                                         None) is not None)
         elif member_order == 'bysource' and self.analyzer:
-            import pdb; pdb.set_trace()
             # sort by source order, by virtue of the module analyzer
             tagorder = self.analyzer.tagorder
             name = self.object.__name__
