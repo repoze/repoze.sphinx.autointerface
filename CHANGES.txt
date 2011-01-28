@@ -1,6 +1,12 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
+0.6.1 (unreleased)
+------------------
+
+- Fix ':member-order: bysource' handling.
+
+
 0.6 (2011-01-28)
 ----------------
 
