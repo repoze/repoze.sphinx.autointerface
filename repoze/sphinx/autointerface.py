@@ -53,7 +53,7 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
         members = self.object.namesAndDescriptions()
         if self.options.members is not autodoc.ALL:
             specified = []
-            for line in self.options.members:
+            for line in (self.options.members or []):
                 specified.extend(line.split())
             mapping = dict(members)
             members = [(x, mapping[x]) for x in specified]
