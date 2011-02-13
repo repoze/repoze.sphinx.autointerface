@@ -1,7 +1,7 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-0.6.1 (2011-02-13)
+0.6.2 (2011-02-13)
 ------------------
 
 - Fix ``TypeError: 'NoneType' object is not iterable`` error when generating
