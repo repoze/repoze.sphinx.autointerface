@@ -1,0 +1,7 @@
+*.egg-info
+*.pyc
+*$py.class
+.coverage
+dist/
+*~
+.tox
