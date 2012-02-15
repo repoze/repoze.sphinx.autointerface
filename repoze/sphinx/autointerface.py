@@ -24,7 +24,7 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
 
     def __init__(self, *args, **kwargs):
         super(InterfaceDocumenter, self).__init__(*args, **kwargs)
-        self.options.show_inheritance=True
+        self.options.show_inheritance = True
 
     @classmethod
     def can_document_member(cls, member, membername, isattr, parent):
@@ -37,7 +37,8 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
         autodoc.Documenter.add_directive_header(self, sig)
 
         # add inheritance info, if wanted
-        bases=[base for base in self.object.__bases__ if base is not Interface]
+        bases = [base for base in self.object.__bases__
+                       if base is not Interface]
         if not self.doc_as_attr and self.options.show_inheritance and bases:
             self.add_line(u'', '<autodoc>')
             bases = [u':class:`%s.%s`' % (b.__module__, b.getName())
@@ -88,7 +89,7 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
                 self.add_line(u'', '<autointerface>')
                 self.indent += self.content_indent
                 sourcename = u'docstring of %s.%s' % (self.fullname, name)
-                docstrings=[prepare_docstring(force_decode(doc, None))]
+                docstrings = [prepare_docstring(force_decode(doc, None))]
                 for i, line in enumerate(self.process_doc(docstrings)):
                     self.add_line(line, sourcename, i)
                 self.add_line(u'', '<autointerface>')
