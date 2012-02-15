@@ -1,6 +1,13 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
+Unreleased
+----------
+
+- Include interface docs under the ``automodule`` directive.  Thanks to
+  Krys Lawrence for the patch.
+
+
 0.6.2 (2011-02-13)
 ------------------
 

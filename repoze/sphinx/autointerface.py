@@ -8,6 +8,7 @@ except ImportError:
     from sphinx.domains.python import PyClasslike
 from sphinx.ext import autodoc
 from zope.interface import Interface
+from zope.interface.interface import InterfaceClass
 
 class InterfaceDesc(PyClasslike):
     def get_index_text(self, modname, name_cls):
@@ -28,8 +29,7 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
 
     @classmethod
     def can_document_member(cls, member, membername, isattr, parent):
-        return isinstance(member, types.ClassType) and \
-                issubclass(member, Interface)
+        return isinstance(member, InterfaceClass)
 
     def add_directive_header(self, sig):
         if self.doc_as_attr:
