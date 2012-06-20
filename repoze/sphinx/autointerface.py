@@ -1,4 +1,4 @@
-import types
+import sys
 from sphinx.util.docstrings import prepare_docstring
 from sphinx.util import force_decode
 try:
@@ -9,6 +9,13 @@ except ImportError:
 from sphinx.ext import autodoc
 from zope.interface import Interface
 from zope.interface.interface import InterfaceClass
+
+if sys.version_info[0] >= 3:
+    def u(s):
+        return s
+else:
+    def u(s):
+        return unicode(s, "unicode_escape")
 
 class InterfaceDesc(PyClasslike):
     def get_index_text(self, modname, name_cls):
@@ -40,10 +47,10 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
         bases = [base for base in self.object.__bases__
                        if base is not Interface]
         if not self.doc_as_attr and self.options.show_inheritance and bases:
-            self.add_line(u'', '<autodoc>')
-            bases = [u':class:`%s.%s`' % (b.__module__, b.getName())
+            self.add_line(u(''), '<autodoc>')
+            bases = [u(':class:`%s.%s`') % (b.__module__, b.getName())
                      for b in bases]
-            self.add_line(u'   Extends: %s' % ', '.join(bases),
+            self.add_line(u('   Extends: %s') % ', '.join(bases),
                           '<autodoc>')
 
     def format_args(self):
@@ -51,7 +58,7 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
 
     def document_members(self, all_members=True):
         oldindent = self.indent
-        members = self.object.namesAndDescriptions()
+        members = list(self.object.namesAndDescriptions())
         if self.options.members is not autodoc.ALL:
             specified = []
             for line in (self.options.members or []):
@@ -77,22 +84,22 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
             members.sort(key=keyfunc)
 
         for name, desc in members:
-            self.add_line(u'', '<autointerface>')
+            self.add_line(u(''), '<autointerface>')
             sig = getattr(desc, 'getSignatureString', None)
             if sig is None:
-                self.add_line(u'.. attribute:: %s' % name, '<autointerface>')
+                self.add_line(u('.. attribute:: %s') % name, '<autointerface>')
             else:
-                self.add_line(u'.. method:: %s%s' % (name, sig()),
+                self.add_line(u('.. method:: %s%s') % (name, sig()),
                               '<autointerface>')
             doc = desc.getDoc()
             if doc:
-                self.add_line(u'', '<autointerface>')
+                self.add_line(u(''), '<autointerface>')
                 self.indent += self.content_indent
-                sourcename = u'docstring of %s.%s' % (self.fullname, name)
+                sourcename = u('docstring of %s.%s') % (self.fullname, name)
                 docstrings = [prepare_docstring(force_decode(doc, None))]
                 for i, line in enumerate(self.process_doc(docstrings)):
                     self.add_line(line, sourcename, i)
-                self.add_line(u'', '<autointerface>')
+                self.add_line(u(''), '<autointerface>')
                 self.indent = oldindent
 
 
