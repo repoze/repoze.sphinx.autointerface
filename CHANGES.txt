@@ -1,8 +1,8 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-Unreleased
-----------
+0.7.0 (2012-06-20)
+------------------
 
 - PyPy compatibility.
 
