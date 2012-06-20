@@ -4,6 +4,8 @@ repoze.sphinx.autointerface Changelog
 Unreleased
 ----------
 
+- PyPy compatibility.
+
 - Python 3.2+ compatibility.  Thanks to Arfrever for the patch.
 
 - Include interface docs under the ``automodule`` directive.  Thanks to
