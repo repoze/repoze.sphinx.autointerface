@@ -14,9 +14,6 @@
 
 import os
 
-from ez_setup import use_setuptools
-use_setuptools()
-
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -24,7 +21,7 @@ README = open(os.path.join(here, 'README.txt')).read()
 CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 setup(name='repoze.sphinx.autointerface',
-      version='0.7.0',
+      version='0.7.1',
       description='Sphinx extension: auto-generates API docs '
                   'from Zope interfaces',
       long_description=README + '\n\n' +  CHANGES,

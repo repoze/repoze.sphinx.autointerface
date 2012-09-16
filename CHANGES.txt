@@ -1,6 +1,11 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
+0.7.1 (2012-09-15)
+------------------
+
+- Remove ``setup.py`` dependency on ``ez_setup.py``.
+
 0.7.0 (2012-06-20)
 ------------------
 
