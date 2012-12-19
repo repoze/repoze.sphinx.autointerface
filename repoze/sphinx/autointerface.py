@@ -114,8 +114,11 @@ def setup(app):
         # (without this, an exact match is required)
         class InterfacePythonDomain(app.domains['py']):
             pass
+        InterfacePythonDomain.object_types = app.domains['py'].object_types.copy()
         InterfacePythonDomain.object_types['interface'] = ObjType( 'interface', 'interface', 'obj', 'class')
-        InterfacePythonDomain.object_types['class'].roles += ('interface',)
+        old_class = InterfacePythonDomain.object_types['class']
+        new_class = ObjType( old_class.lname, *(old_class.roles + ('interface',)), **old_class.attrs )
+        InterfacePythonDomain.object_types['class'] = new_class
         app.override_domain( InterfacePythonDomain )
     except AttributeError:
         # Sphinx < 1.0
