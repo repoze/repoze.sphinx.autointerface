@@ -65,7 +65,7 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
                 specified.extend(line.split())
             mapping = dict(members)
             members = [(x, mapping[x]) for x in specified]
-        member_order = (self.options.member_order or 
+        member_order = (self.options.member_order or
                         self.env.config.autodoc_member_order)
         if member_order == 'alphabetical':
             members.sort()
@@ -103,12 +103,21 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
                 self.indent = oldindent
 
 
-
 def setup(app):
     try:
         app.add_directive_to_domain('py', 'interface', InterfaceDesc)
+
+        from sphinx.domains import ObjType
+
+        # Allow the :class: directive to xref interface objects through the search
+        # mechanism, i.e., prefixed with a '.', like :class:`.ITheInterface`
+        # (without this, an exact match is required)
+        class InterfacePythonDomain(app.domains['py']):
+            pass
+        InterfacePythonDomain.object_types['interface'] = ObjType( 'interface', 'interface', 'obj', 'class')
+        InterfacePythonDomain.object_types['class'].roles += ('interface',)
+        app.override_domain( InterfacePythonDomain )
     except AttributeError:
         # Sphinx < 1.0
         app.add_directive('interface', InterfaceDesc)
     app.add_autodocumenter(InterfaceDocumenter)
-
