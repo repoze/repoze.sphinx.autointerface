@@ -1,6 +1,11 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
+In version control
+------------------
+
+- Allow cross references using the ``:class:`` directive to use the ``.`` for "fuzzy" searching.
+
 0.7.1 (2012-09-15)
 ------------------
 
