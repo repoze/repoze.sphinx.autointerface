@@ -25,7 +25,7 @@ with open(os.path.join(here, 'CHANGES.rst')) as f:
     CHANGES = f.read()
 
 setup(name='repoze.sphinx.autointerface',
-      version='0.8.dev0',
+      version='0.8',
       description='Sphinx extension: auto-generates API docs '
                   'from Zope interfaces',
       long_description=README + '\n\n' +  CHANGES,

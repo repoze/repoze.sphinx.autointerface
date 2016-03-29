@@ -1,7 +1,7 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-0.8 (unreleased)
+0.8 (2016-03-28)
 ----------------
 
 - Add support for Python 3.3, 3.4, and 3.5.
