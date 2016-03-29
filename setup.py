@@ -17,11 +17,15 @@ import os
 from setuptools import setup, find_packages
 
 here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, 'README.txt')).read()
-CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
+
+with open(os.path.join(here, 'README.rst')) as f:
+    README = f.read()
+
+with open(os.path.join(here, 'CHANGES.rst')) as f:
+    CHANGES = f.read()
 
 setup(name='repoze.sphinx.autointerface',
-      version='0.7.1',
+      version='0.8.dev0',
       description='Sphinx extension: auto-generates API docs '
                   'from Zope interfaces',
       long_description=README + '\n\n' +  CHANGES,
