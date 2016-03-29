@@ -4,6 +4,10 @@ repoze.sphinx.autointerface Changelog
 0.8 (unreleased)
 ----------------
 
+- Add support for Python 3.3, 3.4, and 3.5.
+
+- Drop support for Python 2.6 and 3.2.
+
 - Allow cross references using the ``:class:`` directive to use the
   ``.`` for "fuzzy" searching.  Thanks to Jason Madden for the patch.
 
