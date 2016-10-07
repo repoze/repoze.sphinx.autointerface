@@ -1,0 +1,22 @@
+language: python
+sudo: false
+python:
+  - 2.7
+  - 3.4
+  - 3.5
+  - pypy
+script:
+  - zope-testrunner --test-path=.  --auto-color --auto-progress
+
+install:
+  - pip install -U pip
+  - pip install -U setuptools
+  - pip install -U -e ".[test]"
+
+# cache: pip seems not to work if `install` is replaced (https://github.com/travis-ci/travis-ci/issues/3239)
+cache:
+  directories:
+    - $HOME/.cache/pip
+
+before_cache:
+    - rm -f $HOME/.cache/pip/log/debug.log

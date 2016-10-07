@@ -24,6 +24,10 @@ with open(os.path.join(here, 'README.rst')) as f:
 with open(os.path.join(here, 'CHANGES.rst')) as f:
     CHANGES = f.read()
 
+tests_require = [
+    'zope.testrunner',
+]
+
 setup(name='repoze.sphinx.autointerface',
       version='0.8.1.dev0',
       description='Sphinx extension: auto-generates API docs '
@@ -50,11 +54,14 @@ setup(name='repoze.sphinx.autointerface',
       include_package_data=True,
       namespace_packages=['repoze', 'repoze.sphinx'],
       zip_safe=False,
-      tests_require = [],
-      install_requires=['zope.interface',
-                        'Sphinx>=0.6.1',
-                        'setuptools',
-                       ],
+      tests_require = tests_require,
+      install_requires=[
+          'zope.interface',
+          'Sphinx>=1.0',
+          'setuptools',
+      ],
+      extras_require = {
+          'test': tests_require,
+      },
       #test_suite="repoze.",
       )
-
