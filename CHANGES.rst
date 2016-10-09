@@ -4,7 +4,7 @@ repoze.sphinx.autointerface Changelog
 0.8.1 (unreleased)
 ------------------
 
-- TBD
+- Drop support for Sphinx < 1.0.
 
 0.8 (2016-03-28)
 ----------------
