@@ -103,8 +103,14 @@ def setup(app):
     # ``add_object_type_to_domain()`` method, so we have to carefully 
     # override the whole domain. We are using the currently configured 
     # domain class instead of importing it, because it could be already 
-    # overriden (clumsy inheritance). 
-    current_domain = app.registry.domains['py']
+    # overriden.
+    try:
+        # New API
+        current_domain = app.registry.domains['py']
+    except AttributeError:
+        # Old API
+        current_domain = app.domains['py']
+
     new_types = current_domain.object_types.copy()
     new_types['interface'] = ObjType('interface', 'interface', 'obj', 'class')
     
