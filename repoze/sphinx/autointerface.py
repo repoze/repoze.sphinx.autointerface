@@ -1,7 +1,11 @@
 
 from sphinx.util.docstrings import prepare_docstring
 from sphinx.util import force_decode
-from sphinx.domains.python import PyClasslike
+from sphinx.domains import ObjType
+from sphinx.domains.python import (
+    PyClasslike,
+    PyXRefRole,
+)
 from sphinx.ext import autodoc
 from zope.interface import Interface
 from zope.interface.interface import InterfaceClass
@@ -94,20 +98,27 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
 
 
 def setup(app):
+    # We have to add a new ``object type`` for ``:interface:`` references 
+    # to work properly. However, Sphinx does not have an 
+    # ``add_object_type_to_domain()`` method, so we have to carefully 
+    # override the whole domain. We are using the currently configured 
+    # domain class instead of importing it, because it could be already 
+    # overriden.
+    try:
+        # New API
+        current_domain = app.registry.domains['py']
+    except AttributeError:
+        # Old API
+        current_domain = app.domains['py']
+
+    new_types = current_domain.object_types.copy()
+    new_types['interface'] = ObjType('interface', 'interface', 'obj', 'class')
+    
+    class InterfacePythonDomain(current_domain):
+        object_types = new_types
+
+    app.override_domain(InterfacePythonDomain)
     app.add_directive_to_domain('py', 'interface', InterfaceDesc)
-
-    from sphinx.domains import ObjType
-
-    # Allow the :class: directive to xref interface objects through the search
-    # mechanism, i.e., prefixed with a '.', like :class:`.ITheInterface`
-    # (without this, an exact match is required)
-    class InterfacePythonDomain(app.domains['py']):
-        pass
-    InterfacePythonDomain.object_types = app.domains['py'].object_types.copy()
-    InterfacePythonDomain.object_types['interface'] = ObjType( 'interface', 'interface', 'obj', 'class')
-    old_class = InterfacePythonDomain.object_types['class']
-    new_class = ObjType( old_class.lname, *(old_class.roles + ('interface',)), **old_class.attrs )
-    InterfacePythonDomain.object_types['class'] = new_class
-    app.override_domain( InterfacePythonDomain )
-
+    app.add_role_to_domain('py', 'interface', PyXRefRole())
     app.add_autodocumenter(InterfaceDocumenter)
+    
