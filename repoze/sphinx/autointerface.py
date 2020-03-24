@@ -1,10 +1,19 @@
 
+import sys
+
 from sphinx.util.docstrings import prepare_docstring
-from sphinx.util import force_decode
 from sphinx.domains.python import PyClasslike
 from sphinx.ext import autodoc
 from zope.interface import Interface
 from zope.interface.interface import InterfaceClass
+
+
+if sys.version_info < (3,):
+    from sphinx.util import force_decode
+else:
+    def force_decode(s, encoding):
+        return s
+
 
 class InterfaceDesc(PyClasslike):
     def get_index_text(self, modname, name_cls):
@@ -98,16 +107,25 @@ def setup(app):
 
     from sphinx.domains import ObjType
 
+    try:
+        domains = app.domains
+    except AttributeError:
+        domains = app.registry.domains
+
     # Allow the :class: directive to xref interface objects through the search
     # mechanism, i.e., prefixed with a '.', like :class:`.ITheInterface`
     # (without this, an exact match is required)
-    class InterfacePythonDomain(app.domains['py']):
+    class InterfacePythonDomain(domains['py']):
         pass
-    InterfacePythonDomain.object_types = app.domains['py'].object_types.copy()
+    InterfacePythonDomain.object_types = domains['py'].object_types.copy()
     InterfacePythonDomain.object_types['interface'] = ObjType( 'interface', 'interface', 'obj', 'class')
     old_class = InterfacePythonDomain.object_types['class']
     new_class = ObjType( old_class.lname, *(old_class.roles + ('interface',)), **old_class.attrs )
     InterfacePythonDomain.object_types['class'] = new_class
-    app.override_domain( InterfacePythonDomain )
+
+    if hasattr(app, 'override_domain'):
+        app.override_domain( InterfacePythonDomain )
+    else:
+        app.add_domain( InterfacePythonDomain, override=True )
 
     app.add_autodocumenter(InterfaceDocumenter)

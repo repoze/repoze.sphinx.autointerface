@@ -4,6 +4,12 @@ repoze.sphinx.autointerface Changelog
 0.8.1 (unreleased)
 ------------------
 
+- Update to work with newer Sphinx versions:
+  * Sphinx.domains -> Sphinx.registry.domains
+  * Sphinx.override_domain(D) -> Sphinx.add_domain(D, override=True)
+
+- Avoid sphinx.util.force_decode on Python 3.x.
+
 - Drop support for Sphinx < 1.0.
 
 0.8 (2016-03-28)
