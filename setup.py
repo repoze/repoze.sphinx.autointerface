@@ -12,17 +12,16 @@
 #
 ##############################################################################
 
-import os
-
 from setuptools import setup, find_packages
 
-here = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(here, 'README.rst')) as f:
-    README = f.read()
+def readfile(name):
+    with open(name) as f:
+        return f.read()
 
-with open(os.path.join(here, 'CHANGES.rst')) as f:
-    CHANGES = f.read()
+
+README = readfile('README.rst')
+CHANGES = readfile('CHANGES.rst')
 
 tests_require = [
     'zope.testrunner',
@@ -32,7 +31,7 @@ setup(name='repoze.sphinx.autointerface',
       version='0.8.1.dev0',
       description='Sphinx extension: auto-generates API docs '
                   'from Zope interfaces',
-      long_description=README + '\n\n' +  CHANGES,
+      long_description=README + '\n\n' + CHANGES,
       classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -44,11 +43,16 @@ setup(name='repoze.sphinx.autointerface',
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
         ],
-      keywords='web wsgi zope',
+      keywords='web wsgi zope Sphinx',
       author="Agendaless Consulting",
       author_email="repoze-dev@lists.repoze.org",
-      url="http://www.repoze.org",
-      license="BSD-derived (http://www.repoze.org/LICENSE.txt)",
+      url="https://github.com/repoze/repoze.sphinx.autointerface/",
+      project_urls={
+          "Documentation": "https://github.com/repoze/repoze.sphinx.autointerface/",
+          "Changelog": "https://github.com/repoze/repoze.sphinx.autointerface/blob/master/CHANGES.rst",
+          "Issue Tracker": "https://github.com/repoze/repoze.sphinx.autointerface/issues",
+      },
+      license="BSD-derived (Repoze)",
       packages=find_packages(),
       include_package_data=True,
       namespace_packages=['repoze', 'repoze.sphinx'],
@@ -62,5 +66,4 @@ setup(name='repoze.sphinx.autointerface',
       extras_require = {
           'test': tests_require,
       },
-      #test_suite="repoze.",
       )
