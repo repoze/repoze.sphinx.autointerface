@@ -45,7 +45,6 @@ setup(
     ],
     keywords="web wsgi zope Sphinx",
     author="Agendaless Consulting",
-    author_email="repoze-dev@lists.repoze.org",
     url="https://github.com/repoze/repoze.sphinx.autointerface/",
     project_urls={
         "Documentation": "https://github.com/repoze/repoze.sphinx.autointerface/",
