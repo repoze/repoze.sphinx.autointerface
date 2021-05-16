@@ -3,7 +3,7 @@ import os
 import tempfile
 import shutil
 
-from six import StringIO
+from io import StringIO
 
 from sphinx import application
 from sphinx.builders.latex import LaTeXBuilder
