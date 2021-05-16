@@ -8,13 +8,6 @@ from zope.interface import Interface
 from zope.interface.interface import InterfaceClass
 
 
-if sys.version_info < (3,):
-    from sphinx.util import force_decode
-else:
-    def force_decode(s, encoding):
-        return s
-
-
 class InterfaceDesc(PyClasslike):
     def get_index_text(self, modname, name_cls):
         return '%s (interface in %s)' % (name_cls[0], modname)
@@ -95,7 +88,7 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
                 self.add_line(u'', '<autointerface>')
                 self.indent += self.content_indent
                 sourcename = u'docstring of %s.%s' % (self.fullname, name)
-                docstrings = [prepare_docstring(force_decode(doc, None))]
+                docstrings = [prepare_docstring(doc, None)]
                 for i, line in enumerate(self.process_doc(docstrings)):
                     self.add_line(line, sourcename, i)
                 self.add_line(u'', '<autointerface>')
