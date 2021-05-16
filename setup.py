@@ -57,6 +57,7 @@ setup(name='repoze.sphinx.autointerface',
       include_package_data=True,
       namespace_packages=['repoze', 'repoze.sphinx'],
       zip_safe=False,
+      python_requires=">=3.6",
       tests_require = tests_require,
       install_requires=[
           'zope.interface',
