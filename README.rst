@@ -37,11 +37,13 @@ Registering the Extension
 Add ``repoze.sphinx.autointerface`` to the ``extensions`` list in the
 ``conf.py`` of the Sphinx documentation for your product.
 
-extensions = [
-    "sphinx.ext.autodoc",
-    "sphinx.ext.doctest",
-    "repoze.sphinx.autointerface",
-]
+.. code-block:: python
+
+    extensions = [
+        "sphinx.ext.autodoc",
+        "sphinx.ext.doctest",
+        "repoze.sphinx.autointerface",
+    ]
 
 
 Using the Extension
