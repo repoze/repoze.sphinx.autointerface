@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - master
+      # Temporarily add for CI on stevepiercy's fork
+      - sphinx-40-compat
     tags:
   # Build pull requests
   pull_request:
