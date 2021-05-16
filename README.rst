@@ -1,14 +1,15 @@
 repoze.sphinx.autointerface README
 ==================================
 
-.. image:: https://travis-ci.org/repoze/repoze.sphinx.autointerface.png?branch=master
-        :target: https://travis-ci.org/repoze/repoze.sphinx.autointerface
+.. image:: https://github.com/repoze/repoze.sphinx.autointerface/actions/workflows/ci-tests.yml/badge.svg
+    :target: https://github.com/repoze/repoze.sphinx.autointerface/actions/workflows/ci-tests.yml
 
 .. image:: https://img.shields.io/pypi/v/repoze.sphinx.autointerface.svg
-        :target: https://pypi.python.org/pypi/repoze.sphinx.autointerface
+    :target: https://pypi.python.org/pypi/repoze.sphinx.autointerface
 
 .. image:: https://img.shields.io/pypi/pyversions/repoze.sphinx.autointerface.svg
-        :target: https://pypi.python.org/pypi/repoze.sphinx.autointerface
+    :target: https://pypi.python.org/pypi/repoze.sphinx.autointerface
+
 
 Overview
 --------
