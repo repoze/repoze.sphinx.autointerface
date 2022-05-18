@@ -88,7 +88,7 @@ class InterfaceDocumenter(autodoc.ClassDocumenter):
                 self.add_line(u'', '<autointerface>')
                 self.indent += self.content_indent
                 sourcename = u'docstring of %s.%s' % (self.fullname, name)
-                docstrings = [prepare_docstring(doc, None)]
+                docstrings = [prepare_docstring(doc)]
                 for i, line in enumerate(self.process_doc(docstrings)):
                     self.add_line(line, sourcename, i)
                 self.add_line(u'', '<autointerface>')

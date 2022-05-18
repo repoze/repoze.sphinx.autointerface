@@ -30,7 +30,7 @@ tests_require = [
 setup(
     name="repoze.sphinx.autointerface",
     version="0.8.1.dev0",
-    description="Sphinx extension: auto-generates API docs " "from Zope interfaces",
+    description="Sphinx extension: auto-generates API docs from Zope interfaces",
     long_description=README + "\n\n" + CHANGES,
     long_description_content_type='text/x-rst',
     classifiers=[
@@ -62,7 +62,7 @@ setup(
     tests_require=tests_require,
     install_requires=[
         "zope.interface",
-        "Sphinx>=1.0",
+        "Sphinx >= 4.0",
         "setuptools",
     ],
     extras_require={
