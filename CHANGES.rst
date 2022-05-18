@@ -9,9 +9,9 @@ repoze.sphinx.autointerface Changelog
 
 - Replace Travis-CI with GitHub Actions
 
-- Add support for Python 3.6, 3.7, 3.8, 3.9, and PyPy3.
+- Add support for Python 3.6, 3.7, 3.8, 3.9, 3.10, and PyPy3.
 
-- Drop support for Python 2.7, 3.3, 3.4, 3.5, and PyPy.
+- Drop support for Python 2.7, 3.3, 3.4, and PyPy.
 
 - Update to work with newer Sphinx versions:
   * Sphinx.domains -> Sphinx.registry.domains
