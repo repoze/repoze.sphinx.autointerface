@@ -1,7 +1,7 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-0.8.1 (unreleased)
+1.0.0 (unreleased)
 ------------------
 
 - Remove sphinx.util.force_decode. Previously we hacked it in to support Python
