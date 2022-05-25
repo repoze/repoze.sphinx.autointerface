@@ -1,8 +1,17 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-0.8.1 (unreleased)
+1.0.0 (unreleased)
 ------------------
+
+- Remove sphinx.util.force_decode. Previously we hacked it in to support Python
+  2 and Sphinx 3.x, but Sphinx 4.0 deprecated it and dropped Python 2 support.
+
+- Replace Travis-CI with GitHub Actions
+
+- Add support for Python 3.6, 3.7, 3.8, 3.9, 3.10, and PyPy3.
+
+- Drop support for Python 2.7, 3.3, 3.4, 3.5, and PyPy.
 
 - Update to work with newer Sphinx versions:
   * Sphinx.domains -> Sphinx.registry.domains

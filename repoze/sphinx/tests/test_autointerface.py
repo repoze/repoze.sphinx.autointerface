@@ -3,7 +3,7 @@ import unittest
 from .util import TestApp
 
 from .. import autointerface
-from sphinx.ext.autodoc import AutoDirective, ALL
+from sphinx.ext.autodoc import ALL
 
 from docutils.statemachine import ViewList
 
@@ -21,7 +21,7 @@ class IPlumbusMaker(interface.Interface):
         The schleem is then repurposed.
         """
 
-class Options(object):
+class Options(dict):
     inherited_members = False
     undoc_members = False
     private_members = False
@@ -38,18 +38,40 @@ class Options(object):
     exclude_members = ()
 
     def __init__(self):
+        super(Options, self).__init__()
         self.exclude_members = set()
         self.members = []
+        self.__dict__ = self
+
+class Settings(object):
+
+    tab_width = 4
+
+
+class Document(object):
+
+    def __init__(self, settings):
+        self.settings = settings
+
+
+class State(object):
+
+    def __init__(self, document):
+        self.document = document
+
 
 class Directive(object):
     env = None
     genopt = None
     result = None
+    record_dependencies = None
 
     def __init__(self):
         self._warnings = []
         self.filename_set = set()
         self.result = ViewList()
+        self.record_dependencies = set()
+        self.state = State(Document(Settings()))
 
     def warn(self, msg):
         self._warnings.append(msg)
@@ -77,7 +99,7 @@ class TestAutoInterface(unittest.TestCase):
                              objtype='interface', name='repoze.sphinx.tests.test_autointerface.IPlumbusMaker',
                              **kw):
         directive = self.directive
-        inst = AutoDirective._registry[objtype](directive, name)
+        inst = self.app.registry.documenters['interface'](directive, name)
         inst.generate(**kw)
         # print '\n'.join(directive.result)
         self.assertEqual([], directive._warnings)

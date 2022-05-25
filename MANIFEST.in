@@ -1,0 +1,12 @@
+graft repoze
+
+include README.rst
+include CHANGES.rst
+include CONTRIBUTORS.txt LICENSE.txt COPYRIGHT.txt
+
+include tox.ini .travis.yml
+include TODO.txt
+graft .github
+
+global-exclude __pycache__ *.py[cod]
+global-exclude .DS_Store

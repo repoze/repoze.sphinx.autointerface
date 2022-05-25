@@ -3,12 +3,10 @@ import os
 import tempfile
 import shutil
 
-from six import StringIO
+from io import StringIO
 
 from sphinx import application
 from sphinx.builders.latex import LaTeXBuilder
-from sphinx.theming import Theme
-from sphinx.ext.autodoc import AutoDirective
 from sphinx.pycode import ModuleAnalyzer
 
 from docutils import nodes
@@ -98,8 +96,6 @@ class TestApp(application.Sphinx):
 
     def cleanup(self, doctrees=False):
         shutil.rmtree(self.__tempdir)
-        Theme.themes.clear()
-        AutoDirective._registry.clear()
         ModuleAnalyzer.cache.clear()
         LaTeXBuilder.usepackages = []
         sys.path[:] = self._saved_path
