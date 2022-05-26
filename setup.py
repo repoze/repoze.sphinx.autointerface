@@ -29,7 +29,7 @@ tests_require = [
 
 setup(
     name="repoze.sphinx.autointerface",
-    version="1.0.0.dev0",
+    version="1.0.0",
     description="Sphinx extension: auto-generates API docs from Zope interfaces",
     long_description=README + "\n\n" + CHANGES,
     long_description_content_type='text/x-rst',
