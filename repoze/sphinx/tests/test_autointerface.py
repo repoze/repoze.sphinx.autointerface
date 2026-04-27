@@ -29,6 +29,8 @@ class Options(dict):
     imported_members = False
     show_inheritance = False
     noindex = False
+    no_index = False
+    no_index_entry = False
     annotation = None
     synopsis = ''
     platform = ''
