@@ -1,13 +1,11 @@
 import unittest
 
-from .util import TestApp
-
-from .. import autointerface
-from sphinx.ext.autodoc import ALL
-
 from docutils.statemachine import ViewList
-
+from sphinx.ext.autodoc import ALL
 from zope import interface
+
+from repoze.sphinx import autointerface
+from .util import SphinxTestApp
 
 class IPlumbusMaker(interface.Interface):
 
@@ -15,8 +13,7 @@ class IPlumbusMaker(interface.Interface):
     fleeb = interface.Attribute("The dinglebop is polished with this")
 
     def smoothTheDinglebop(schleem):
-        """
-        Smooth it out.
+        """Smooth it out
 
         The schleem is then repurposed.
         """
@@ -29,8 +26,8 @@ class Options(dict):
     imported_members = False
     show_inheritance = False
     noindex = False
-    no_index = False
-    no_index_entry = False
+    no_index = False  # FBO Sphinx 8.x
+    no_index_entry = False  # FBO Sphinx 9.x
     annotation = None
     synopsis = ''
     platform = ''
@@ -78,11 +75,10 @@ class Directive(object):
     def warn(self, msg):
         self._warnings.append(msg)
 
-class TestAutoInterface(unittest.TestCase):
+class AutoInterfaceTests(unittest.TestCase):
 
     def setUp(self):
-        app = self.app = TestApp()
-        app.builder.env.app = app
+        app = self.app = SphinxTestApp()
         app.builder.env.temp_data['docname'] = 'dummy'
 
         autointerface.setup(app)
@@ -92,14 +88,17 @@ class TestAutoInterface(unittest.TestCase):
         d.env = app.builder.env
         d.genopt = opt
 
-
     def tearDown(self):
         self.app.cleanup()
         self.app = None
 
-    def assertResultContains(self, item,
-                             objtype='interface', name='repoze.sphinx.tests.test_autointerface.IPlumbusMaker',
-                             **kw):
+    def assertResultContains(
+        self,
+        item,
+        objtype='interface',
+        name='tests.unit.test_autointerface.IPlumbusMaker',
+        **kw,
+    ):
         directive = self.directive
         inst = self.app.registry.documenters['interface'](directive, name)
         inst.generate(**kw)
@@ -112,11 +111,15 @@ class TestAutoInterface(unittest.TestCase):
 
     def test_restricted_members(self):
         self.options.members = ['smoothTheDinglebop']
-        all_results = self.assertResultContains('   .. method:: smoothTheDinglebop(schleem)')
+        all_results = self.assertResultContains(
+            '   .. method:: smoothTheDinglebop(schleem)'
+        )
         self.assertNotIn('grumbo', all_results)
 
     def test_all_members(self):
         self.options.members = ALL
-        all_results = self.assertResultContains('   .. method:: smoothTheDinglebop(schleem)')
+        all_results = self.assertResultContains(
+            '   .. method:: smoothTheDinglebop(schleem)'
+        )
         self.assertIn('grumbo', all_results)
         self.assertIn('fleeb', all_results)
