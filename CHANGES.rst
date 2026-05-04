@@ -1,7 +1,7 @@
 repoze.sphinx.autointerface Changelog
 =====================================
 
-1.1.0 (unreleased)
+1.1.0 (2026-05-04)
 ------------------
 
 - Drop ``pkg_resources`` namespace support.
