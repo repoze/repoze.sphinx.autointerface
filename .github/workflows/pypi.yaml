@@ -5,8 +5,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  release-to-pypi:
     runs-on: ubuntu-latest
+    environment: release
     steps:
       - uses: actions/checkout@v4
       - name: Install uv
