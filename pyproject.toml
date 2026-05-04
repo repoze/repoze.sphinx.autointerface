@@ -7,7 +7,7 @@ where = ["src"]
 
 [project]
 name = "repoze-sphinx-autointerface"
-version = "2.2dev0"
+version = "1.1dev0"
 description = "Sphinx extension: auto-generates API docs from Zope interfaces"
 readme = {file = "README.rst", content-type = "text/x-rst"}
 requires-python = ">=3.10"
